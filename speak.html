@@ -32,11 +32,12 @@
             <div id="controlPanel">
                 <select name="Speaking Mode" id="modeDropdown">
                     <option value=""></option>
-                    <option>Speech</option>
-                    <option>Debate</option>
-                    <option>Interview</option>
-                    <option>Timed</option>
+                    <option value="speech">Speech</option>
+                    <option value="debate">Debate</option>
+                    <option value="interview">Interview</option>
+                    <option value="timed">Timed</option>
                 </select>
+                <input type="text" id="textInput">
                 <label id="uploadButton" for="documentUpload">
                     <img id="uploadIcon" src="imgs/upload.png">
                     <input type="file" id="documentUpload" accept=".pdf, .txt, .docx, .doc">

@@ -139,6 +139,7 @@ body{
     cursor: pointer;
     transition: all 0.3s ease-out;
     color: var(--white);
+    width: 100%;
 }
 #modeDropdown:hover{
     transform: translateY(-2px);

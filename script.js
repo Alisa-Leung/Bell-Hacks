@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     startCamera();
+    const selectedElement = document.getElementById("modeDropdown")
+    document
+        .getElementById("modeDropdown")
+        .addEventListener("change", checkMode);
+
 })
 
 let mediaRecorder;
@@ -79,4 +84,91 @@ function toggleCamera() {
     } else {
         startCamera();
     }
+}
+
+function checkMode() {
+    const selectedValue = document.getElementById("modeDropdown").value;
+    const timedMode = document.getElementById("timedMode");
+
+    timedMode.innerHTML = "";
+
+    if (selectedValue === "timed") {
+        createTimer(timedMode);
+    }
+}
+
+function createTimer(parent) {
+    const container = document.createElement("div");
+    container.id = "timerContainer";
+
+    const display = document.createElement("div");
+    display.id = "timerDisplay";
+    display.textContent = "05:00";
+
+    const selectorContainer = document.createElement("div");
+
+    const timeInput = document.createElement("input");
+    timeInput.type = "number";
+    timeInput.min = "1";
+    timeInput.value = "5";
+
+    const label = document.createElement("span");
+    label.textContent = " minutes";
+
+    const buttonContainer = document.createElement("div");
+
+    const startBtn = document.createElement("button");
+    startBtn.textContent = "Start";
+
+    const resetBtn = document.createElement("button");
+    resetBtn.textContent = "Reset";
+
+    let timeLeft = 300;
+    let timerId = null;
+    let running = false;
+
+    function update() {
+        const m = Math.floor(timeLeft / 60);
+        const s = timeLeft % 60;
+        display.textContent =
+            `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    startBtn.onclick = () => {
+        if (running) {
+            clearInterval(timerId);
+            startBtn.textContent = "Resume";
+        } else {
+            if (timeLeft === 0) {
+                timeLeft = parseInt(timeInput.value) * 60;
+                update();
+            }
+
+            timerId = setInterval(() => {
+                timeLeft--;
+                update();
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    alert("Time's up!");
+                }
+            }, 1000);
+
+            startBtn.textContent = "Pause";
+        }
+        running = !running;
+    };
+
+    resetBtn.onclick = () => {
+        clearInterval(timerId);
+        timeLeft = parseInt(timeInput.value) * 60;
+        running = false;
+        startBtn.textContent = "Start";
+        update();
+    };
+
+    selectorContainer.append(timeInput, label);
+    buttonContainer.append(startBtn, resetBtn);
+    container.append(display, selectorContainer, buttonContainer);
+    parent.appendChild(container);
 }
