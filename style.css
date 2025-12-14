@@ -31,10 +31,12 @@
 }
 #logo{
     background-color: var(--brown);
-    height: 10%;
+    height: 60px;
+    width: 60px;
     z-index: 11;
     position: fixed;
     justify-content: left;
+
 }
 #navLink{
     text-decoration: none;
