@@ -24,12 +24,14 @@
     margin: 0;
     color: var(--white);
     font-family: var(--ibm);
+    background-color: var(--black);
 }
 #navLink{
     text-decoration: none;
     font-family: var(--dm);
     font-size: var(--xl);
     transition: all 0.3 ease-out;
+    background-color: var(--brown);
 }
 #navLink:hover{
     color: var(--black);
@@ -52,6 +54,11 @@
 main{
     top: 76px;
     padding: var(--md);
+    position: relative;
+}
+#videoControls{
+    display: flex;
+    justify-content: center;
 }
 #controlButton{
     border-radius: 100%;

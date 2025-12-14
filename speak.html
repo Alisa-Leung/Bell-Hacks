@@ -19,10 +19,12 @@
             </li>
         </ul>
         <main>
-            <video id="videoPreview" autoplay muted></video>
-            <div id="controlButtons">
-                <img onclick="startRecording()" id="controlButton" src="imgs/record.png">
-                <img onclick="stopCamera()" id="controlButton" src="imgs/pause.png"> 
+            <div id="videoControls">
+                <video id="videoPreview" autoplay muted></video>
+                <div id="controlButtons">
+                    <img onclick="startRecording()" id="controlButton" src="imgs/record.png">
+                    <img onclick="toggleCamera()" id="controlButton" src="imgs/pause.png"> 
+                </div>
             </div>
         </main>
     </body>

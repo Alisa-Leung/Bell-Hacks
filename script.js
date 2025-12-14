@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 let mediaRecorder;
 let recordedChunks = [];
 let stream;
+let isCameraOn = false;
 
 async function startCamera(){
     try{
@@ -15,12 +16,17 @@ async function startCamera(){
         const videoElement = document.getElementById("videoPreview");
         videoElement.srcObject = stream;
         videoElement.play();
+        isCameraOn = true;
     } catch (error){
         console.error("Error accessing camera:", error);
     }
 }
 
 function startRecording(){
+    if (!isCameraOn){
+        console.log("Camera is not on");
+        return;
+    }
     recordedChunks = [];
     mediaRecorder = new MediaRecorder(stream, {
         mimeType: "video/webm"
@@ -39,6 +45,11 @@ function startRecording(){
     };
     mediaRecorder.start();
 }
+function stopRecording(){
+    if (mediaRecorder && mediaRecorder.state !== "inactive"){
+        mediaRecorder.stop();
+    }
+}
 function downloadVideo(url) {
     const a = document.createElement('a');
     a.href = url;
@@ -46,7 +57,9 @@ function downloadVideo(url) {
     a.click();
 }
 function stopCamera() {
-    if (stream) {
-        stream.getTracks().forEach(track => track.stop());
+    if (isCameraOn) {
+        stopCamera();
+    } else{
+        startCamera();
     }
 }
