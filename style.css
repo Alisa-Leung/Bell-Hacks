@@ -19,7 +19,14 @@
 #controlButton{
     border-radius: 100%;
     border: none;
-    background-color: var(--blue);
+    background-image: linear-gradient(to bottom, var(--blue), var(--navy));
     width: var(--xl);
     height: var(--xl);
+    padding: var(--sm);
+    transition: all 0.3 ease;
+}
+#controlButton:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    cursor: pointer;
 }
