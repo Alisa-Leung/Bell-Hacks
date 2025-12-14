@@ -12,10 +12,43 @@
     --blue: #254D70;
     --brown: #954C2E;
     --navy: #131D4F;
-    --off-white: #EFE4D2;
+    --white: #EFE4D2;
     --black: #140701;
-}
 
+    /*fonts*/
+    --ibm: "IBM Plex Serif";
+    --dm: "DM Serif Display";
+}
+*{
+    padding: 0;
+    margin: 0;
+    color: var(--white);
+    font-family: var(--ibm);
+}
+#navLink{
+    text-decoration: none;
+    font-family: var(--dm);
+    font-size: var(--xl);
+    transition: all 0.3 ease-out;
+}
+#navLink:hover{
+    color: var(--black);
+    transform: translateY(-2px);
+    text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+#navBar{
+    background-color: var(--brown);
+    position: fixed;
+    list-style-type: none;
+    padding: var(--lg);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    display: flex;
+    gap: var(--lg);
+    justify-content: center;
+    z-index: 10;
+    width: 100%
+}
 #controlButton{
     border-radius: 100%;
     border: none;
@@ -23,10 +56,10 @@
     width: var(--xl);
     height: var(--xl);
     padding: var(--sm);
-    transition: all 0.3 ease;
+    transition: all 0.3 ease-out;
 }
 #controlButton:hover{
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     cursor: pointer;
 }
