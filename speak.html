@@ -10,14 +10,17 @@
         <title>Spokn | Speak</title>
     </head>
     <body>
-        <ul id="navBar">
-            <li>
-                <a id="navLink" href="index.html">Home</a>
-            </li>
-            <li>
-                <a id="navLink" href="speak.html">Speak</a>
-            </li>
-        </ul>
+        <div id="navBarContainer">
+            <img id="logo" src="imgs/logo-offwhite.png">
+            <ul id="navBar">
+                <li>
+                    <a id="navLink" href="index.html" >Home</a>
+                </li>
+                <li>
+                    <a id="navLink" href="speak.html">Speak</a>
+                </li>
+            </ul>
+        </div>
         <main>
             <div id="videoControls">
                 <video id="videoPreview" autoplay muted></video>
@@ -25,6 +28,15 @@
                     <img onclick="startRecording()" id="controlButton" src="imgs/record.png">
                     <img onclick="toggleCamera()" id="controlButton" src="imgs/stop.png"> 
                 </div>
+            </div>
+            <div id="controlPanel">
+                <select name="Speaking Mode" id="modeDropdown">
+                    <option value=""></option>
+                    <option>Speech</option>
+                    <option>Debate</option>
+                    <option>Interview</option>
+                    <option>Timed</option>
+                </select>
             </div>
         </main>
     </body>
