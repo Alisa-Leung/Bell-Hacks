@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     startCamera();
-    const selectedElement = document.getElementById("modeDropdown")
     document
         .getElementById("modeDropdown")
         .addEventListener("change", checkMode);
@@ -11,6 +10,8 @@ let mediaRecorder;
 let recordedChunks = [];
 let stream;
 let isCameraOn = false;
+let isRecording = false;
+let isPaused = false;
 
 async function startCamera(){
     try{
@@ -27,33 +28,67 @@ async function startCamera(){
     }
 }
 
-function startRecording(){
+function toggleRecording(){
     if (!isCameraOn) {
         console.log("Camera is not on");
         return;
     }
     
-    recordedChunks = [];
-    mediaRecorder = new MediaRecorder(stream, {
-        mimeType: "video/mp4"
-    });
-    mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0){
-            recordedChunks.push(event.data);
+    if (!isRecording) {
+        recordedChunks = [];
+        
+        const options = { mimeType: 'video/webm;codecs=vp9' };
+        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+            options.mimeType = 'video/webm;codecs=vp8';
+            if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                options.mimeType = 'video/webm';
+            }
         }
-    };
-    mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, {
-            type: "video/mp4"
-        });
-        const url = URL.createObjectURL(blob);
-        downloadVideo(url);
+        
+        mediaRecorder = new MediaRecorder(stream, options);
+        
+        mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0){
+                recordedChunks.push(event.data);
+            }
+        };
+        
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(recordedChunks, {
+                type: mediaRecorder.mimeType
+            });
+            const url = URL.createObjectURL(blob);
+            downloadVideo(url);
+            const videoElement = document.getElementById("videoPreview");
+            videoElement.classList.remove("recording");
+            videoElement.classList.remove("paused");
+            isRecording = false;
+            isPaused = false;
+            updateRecordButton();
+        };
+        
+        mediaRecorder.start();
+        isRecording = true;
+        isPaused = false;
+        
         const videoElement = document.getElementById("videoPreview");
-        videoElement.classList.remove("recording");
-    };
-    mediaRecorder.start();
-    const videoElement = document.getElementById("videoPreview");
-    videoElement.classList.add("recording");
+        videoElement.classList.add("recording");
+        updateRecordButton();
+    } else {
+        if (isPaused) {
+            mediaRecorder.resume();
+            isPaused = false;
+            const videoElement = document.getElementById("videoPreview");
+            videoElement.classList.remove("paused");
+            updateRecordButton();
+        } else {
+            mediaRecorder.pause();
+            isPaused = true;
+            const videoElement = document.getElementById("videoPreview");
+            videoElement.classList.add("paused");
+            updateRecordButton();
+        }
+    }
 }
 
 function stopRecording() {
@@ -63,9 +98,10 @@ function stopRecording() {
 }
 
 function downloadVideo(url) {
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'recording.mp4';
+    a.download = `recording-${timestamp}.webm`;
     a.click();
 }
 
@@ -83,6 +119,19 @@ function toggleCamera() {
         stopCamera();
     } else {
         startCamera();
+    }
+}
+
+// Helper function to update button image
+function updateRecordButton() {
+    const recordButton = document.getElementById('recordPauseButton');
+    if (!recordButton) return;
+    if (!isRecording) {
+        recordButton.src = 'imgs/record.png';
+    } else if (isPaused) {
+        recordButton.src = 'imgs/resume.png';
+    } else {
+        recordButton.src = 'imgs/pause.png';
     }
 }
 
