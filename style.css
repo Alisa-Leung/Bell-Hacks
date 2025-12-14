@@ -1,4 +1,18 @@
 :root{
     /*sizing*/
-    ;
+    --xs: 2px;
+    --sm: 4px;
+    --md: 8px;
+    --lg: 16px;
+    --xl: 32px;
+    --xxl: 64px;
+    --xxxl: 128px;
+
+    /*colors*/
+    --blue: #254D70;
+    --brown: #954C2E;
+    --navy: #131D4F;
+    --off-white: #EFE4D2;
+    --black: #140701;
+
 }
