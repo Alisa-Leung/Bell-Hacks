@@ -11,21 +11,20 @@
     <style>
         body{
             background: linear-gradient(to bottom, var(--navy), var(--blue));
-            min-height: 100vh;
         }
 
-        #hero{
+        main{
             text-align: center;
             padding: 120px 20px;
         }
 
-        #hero h1{
+        h1{
             font-family: var(--dm);
             font-size: 64px;
             margin-bottom: 16px;
         }
 
-        #hero p{
+        p{
             font-size: 20px;
             max-width: 700px;
             margin: 0 auto 40px;
@@ -40,32 +39,27 @@
             background: linear-gradient(to right, var(--brown), var(--blue));
             cursor: pointer;
             transition: 0.3s ease;
+            text-align: center;
         }
 
         #startBtn:hover{
             transform:scale(1.1);
         }
-
-        #navBar{
-            top: 0;
-            left: 0;
-        }
     </style>
 </head>
 
 <body>
-    <ul id="navBar">
-        <li>
-            <img src="imgs/logo.png" style="width:40px; height:40px; margin-left:-210px;">
-        </li>
-        <li>
-            <a id="navLink" href="index.html" style="margin-left:-130px">Home</a>
-        </li>
-        <li>
-            <a id="navLink" href="speak.html">Speak</a>
-        </li>
+    <div id="navBarContainer">
+        <img id="logo" src="imgs/logo-offwhite.png">
+        <ul id="navBar">
+            <li>
+                <a id="navLink" href="index.html" >Home</a>
+            </li>
+            <li>
+                <a id="navLink" href="speak.html">Speak</a>
+            </li>
     </ul>
-
+    </div>
     <main>
         <h1>Speak with Confidence</h1>
         <p>

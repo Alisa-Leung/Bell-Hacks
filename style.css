@@ -24,7 +24,16 @@
     margin: 0;
     color: var(--white);
     font-family: var(--ibm);
-    background-color: var(--black);
+}
+#navBarContainer{
+    display: flex;
+    text-align: center;
+}
+#logo{
+    background-color: var(--brown);
+    height: 10%;
+    z-index: 11;
+    position: fixed;
 }
 #navLink{
     text-decoration: none;
@@ -48,8 +57,12 @@
     display: flex;
     gap: var(--lg);
     justify-content: center;
-    z-index: 10;
+    z-index: -1;
     width: 100%;
+    top: 0;
+    left: 0;
+    align-items: center;
+    gap: var(--xxl);
 }
 main{
     top: 76px;
@@ -84,7 +97,4 @@ main{
 #videoPreview.recording{
     border-color: var(--white);
     border-width: var(--sm);
-}
-#logoimg{
-    background-color: #954C2E;
 }
