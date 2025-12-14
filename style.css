@@ -89,9 +89,11 @@ main{
 }
 body{
     background: linear-gradient(to bottom, var(--navy), var(--blue));
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-attachment: fixed;
 }
 #videoControls{
-    display: flex;
     text-align: center;
 }
 #controlButton{
