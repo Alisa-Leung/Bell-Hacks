@@ -15,3 +15,11 @@
     --off-white: #EFE4D2;
     --black: #140701;
 }
+
+#controlButton{
+    border-radius: 100%;
+    border: none;
+    background-color: var(--blue);
+    width: var(--xl);
+    height: var(--xl);
+}
