@@ -47,7 +47,11 @@
     gap: var(--lg);
     justify-content: center;
     z-index: 10;
-    width: 100%
+    width: 100%;
+}
+main{
+    top: 76px;
+    padding: var(--md);
 }
 #controlButton{
     border-radius: 100%;
@@ -62,4 +66,9 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     cursor: pointer;
+}
+#videoPreview{
+    transform: scaleX(-1);
+    background-color: var(--black);
+    border-radius: var(--md);
 }

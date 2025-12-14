@@ -6,6 +6,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
+        <script src="script.js"></script>
         <title>Spokn | Speak</title>
     </head>
     <body>
@@ -18,13 +19,10 @@
             </li>
         </ul>
         <main>
-            <div id="modeDiv"></div>
-            <div id="videoContainer">
-                <canvas id="outputCanvas"></canvas>
-            </div>
+            <video id="videoPreview" autoplay muted></video>
             <div id="controlButtons">
-                <img id="controlButton" src="imgs/record.png">
-                <img id="controlButton" src="imgs/pause.png"> 
+                <img onclick="startRecording()" id="controlButton" src="imgs/record.png">
+                <img onclick="stopCamera()" id="controlButton" src="imgs/pause.png"> 
             </div>
         </main>
     </body>
