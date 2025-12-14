@@ -42,12 +42,29 @@
     font-size: var(--xl);
     transition: all 0.3 ease-out;
     background-color: var(--brown);
+    opacity: 80%;
+    position: relative;
+}
+#navLink::after{
+    content: "";
+    position:absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--white);
+    background-size: 2px 2px;
+    background-repeat: repeat-x;
+    transition: width 0.3s ease;
+}
+#navLink:hover::after{
+    width: 100%;
 }
 #navLink:hover{
-    color: var(--black);
     transform: translateY(-2px);
-    text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
     cursor: pointer;
+    opacity: 100%;
 }
 #navBar{
     background-color: var(--brown);
