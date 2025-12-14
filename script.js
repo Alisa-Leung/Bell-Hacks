@@ -37,11 +37,11 @@ function toggleRecording(){
     if (!isRecording) {
         recordedChunks = [];
         
-        const options = { mimeType: 'video/webm;codecs=vp9' };
+        const options = { mimeType: 'video/mp4;codecs=vp9' };
         if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-            options.mimeType = 'video/webm;codecs=vp8';
+            options.mimeType = 'video/mp4;codecs=vp8';
             if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                options.mimeType = 'video/webm';
+                options.mimeType = 'video/mp4';
             }
         }
         
@@ -101,7 +101,7 @@ function downloadVideo(url) {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const a = document.createElement('a');
     a.href = url;
-    a.download = `recording-${timestamp}.webm`;
+    a.download = `recording-${timestamp}.mp4`;
     a.click();
 }
 
