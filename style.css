@@ -58,7 +58,7 @@ main{
 }
 #videoControls{
     display: flex;
-    justify-content: center;
+    text-align: center;
 }
 #controlButton{
     border-radius: 100%;
@@ -78,4 +78,10 @@ main{
     transform: scaleX(-1);
     background-color: var(--black);
     border-radius: var(--md);
+    border: 3px solid transparent;
+    transition: border-color 0.3s ease;
+}
+#videoPreview.recording{
+    border-color: var(--white);
+    border-width: var(--sm);
 }

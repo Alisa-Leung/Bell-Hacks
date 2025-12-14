@@ -23,13 +23,14 @@ async function startCamera(){
 }
 
 function startRecording(){
-    if (!isCameraOn){
+    if (!isCameraOn) {
         console.log("Camera is not on");
         return;
     }
+    
     recordedChunks = [];
     mediaRecorder = new MediaRecorder(stream, {
-        mimeType: "video/webm"
+        mimeType: "video/mp4"
     });
     mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0){
@@ -38,28 +39,44 @@ function startRecording(){
     };
     mediaRecorder.onstop = () => {
         const blob = new Blob(recordedChunks, {
-            type: "video/webm"
+            type: "video/mp4"
         });
         const url = URL.createObjectURL(blob);
         downloadVideo(url);
+        const videoElement = document.getElementById("videoPreview");
+        videoElement.classList.remove("recording");
     };
     mediaRecorder.start();
+    const videoElement = document.getElementById("videoPreview");
+    videoElement.classList.add("recording");
 }
-function stopRecording(){
-    if (mediaRecorder && mediaRecorder.state !== "inactive"){
+
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
         mediaRecorder.stop();
     }
 }
+
 function downloadVideo(url) {
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'recording.webm';
+    a.download = 'recording.mp4';
     a.click();
 }
+
 function stopCamera() {
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        const videoElement = document.getElementById("videoPreview");
+        videoElement.srcObject = null;
+        isCameraOn = false;
+    }
+}
+
+function toggleCamera() {
     if (isCameraOn) {
         stopCamera();
-    } else{
+    } else {
         startCamera();
     }
 }
