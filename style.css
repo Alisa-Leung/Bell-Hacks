@@ -97,9 +97,9 @@ body{
 #controlButton{
     border-radius: 100%;
     border: none;
-    background-image: linear-gradient(to bottom, var(--blue), var(--navy));
-    width: var(--xl);
-    height: var(--xl);
+    background-image: linear-gradient(to bottom, var(--brown), var(--black));
+    width: var(--xxl);
+    height: var(--xxl);
     padding: var(--sm);
     transition: all 0.3 ease-out;
 }
@@ -114,6 +114,7 @@ body{
     border-radius: var(--md);
     border: 3px solid transparent;
     transition: border-color 0.3s ease;
+    width: 50%;
 }
 #videoPreview.recording{
     border-color: var(--white);
@@ -127,4 +128,35 @@ body{
     height: 100%;
     z-index: -1;
     pointer-events: none;
+}
+#modeDropdown{
+    background-color: var(--brown);
+    border: none;
+    border-radius: var(--sm);
+    padding: var(--sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--white);
+}
+#modeDropdown:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba (0, 0, 0, 0.15);
+}
+#documentUpload{
+    display: none;
+}
+#uploadButton{
+    border-radius: 100%;
+    border: none;
+    background-image: linear-gradient(to bottom, var(--brown), var(--black));
+    width: var(--xxl);
+    height: var(--xxl);
+    padding: var(--sm);
+    transition: all 0.3 ease-out;
+    cursor: pointer;
+    
+}
+#uploadButton:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
