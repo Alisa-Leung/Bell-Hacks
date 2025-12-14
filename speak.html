@@ -21,7 +21,7 @@
                 </li>
             </ul>
         </div>
-        <main>
+        <main style="display:flex;">
             <div id="videoControls">
                 <video id="videoPreview" autoplay muted></video>
                 <div id="controlButtons">
@@ -38,9 +38,9 @@
                     <option>Timed</option>
                 </select>
                 <label id="uploadButton" for="documentUpload">
-                    <img src="imgs/upload.png">
+                    <img id="uploadIcon" src="imgs/upload.png">
+                    <input type="file" id="documentUpload" accept=".pdf, .txt, .docx, .doc">
                 </label>
-                <input type="file" id="documentUpload" accept=".pdf, .txt, .docx, .doc">
             </div>
         </main>
     </body>
