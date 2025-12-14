@@ -85,3 +85,6 @@ main{
     border-color: var(--white);
     border-width: var(--sm);
 }
+#logoimg{
+    background-color: #954C2E;
+}
