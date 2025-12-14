@@ -43,7 +43,6 @@
     font-family: var(--dm);
     font-size: var(--xl);
     transition: all 0.3s ease-out;
-    background-color: var(--brown);
     opacity: 80%;
     position: relative;
 }
@@ -69,11 +68,9 @@
     opacity: 100%;
 }
 #navBar{
-    background-color: var(--brown);
     position: fixed;
     list-style-type: none;
     padding: var(--lg);
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
     display: flex;
     gap: var(--lg);
     justify-content: center;
