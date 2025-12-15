@@ -35,6 +35,8 @@
     z-index: 11;
     position: fixed;
     justify-content: left;
+    padding-top: 5pt;
+    padding-left: 5pt;
 }
 #navLink{
     text-decoration: none;
