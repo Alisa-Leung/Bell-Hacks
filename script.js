@@ -1,3 +1,6 @@
+const GEMINI_API_KEY = 'AIzaSyCTOffIhfovXKLqCDnPUJgFmIBX05-LIpY';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+
 document.addEventListener("DOMContentLoaded", () => {
     startCamera();
     document
@@ -465,8 +468,6 @@ function handleFileUpload(event) {
     uploadButton.parentNode.insertBefore(fileDisplayContainer, uploadButton.nextSibling);
 }
 
-const GEMINI_API_KEY = 'AIzaSyCTOffIhfovXKLqCDnPUJgFmIBX05-LIpY';
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
 
 let userTopic = '';
 let uploadedFileContent = '';
@@ -590,18 +591,26 @@ async function generateRebuttal() {
     const context = uploadedFileContent || userTopic || "the current topic";
     const userSpeech = speechTranscript.trim() || "No speech detected yet";
     
+    // --- FIX 1: ADD LATEST SPEECH TO HISTORY *BEFORE* GENERATING REBUTTAL ---
+    // The latest user speech is captured during the recording segment leading up to the PAUSE.
+    // We add it to the history list that will be sent to the model.
+    debateHistory.push(`User Speech (Last Segment): "${userSpeech}"`);
+    
     const historyText = debateHistory.length > 0 
-        ? `Previous exchanges:\n${debateHistory.join('\n')}\n\n` 
+        ? `Previous exchanges (Speaker is YOU, Opponent is GEMINI):\n${debateHistory.join('\n')}\n\n` 
         : '';
 
-    const prompt = `${historyText}You are a debate opponent. The topic is: ${context}
+    // --- REFINED PROMPT ---
+    const prompt = `${historyText}
+    The central topic for this debate is: **${context}**.
     
-The speaker just said: "${userSpeech}"
+    The speaker (your opponent) has just completed their last segment. Their full argument for this segment was:
+    "${userSpeech}"
 
-Provide a strong counter-argument or challenging question that directly responds to what they said (2-3 sentences max). Be specific and reference their points.`;
+    Provide a strong counter-argument or challenging question that directly responds to the content of the speaker's last segment (2-3 sentences max). Be specific and reference their points.`;
 
     const rebuttal = await callGeminiAPI(prompt, 
-        "You are a skilled debater. Be respectful but challenging. Keep responses concise and impactful. Directly address what the speaker said.");
+        "You are a skilled debater and the opponent in this session. Be respectful but highly challenging. Keep responses concise (2-3 sentences) and impactful. Directly address the speaker's last argument.");
 
     removeLoading(loadingData);
 
@@ -612,9 +621,14 @@ Provide a strong counter-argument or challenging question that directly responds
         <p>${rebuttal}</p>
     `;
     debateMode.appendChild(rebuttalDiv);
-
-    debateHistory.push(`You said: ${userSpeech}`);
-    debateHistory.push(`Opponent: ${rebuttal}`);
+    
+    // --- FINAL HISTORY UPDATE ---
+    // Now that the rebuttal is generated, add it to the history for the *next* turn.
+    debateHistory.push(`Opponent Rebuttal: ${rebuttal}`);
+    
+    // Clear the transcript for the next segment
+    speechTranscript = '';
+    // Optional: You may want to update the transcript display to clear it here.
 }
 
 async function generateDebrief() {
