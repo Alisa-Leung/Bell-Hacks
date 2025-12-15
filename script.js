@@ -112,12 +112,11 @@ function resumeListening() {
 }
 
 function updateTranscriptDisplay(finalText, interimText) {
-    // Create or update transcript display in the control panel
     let transcriptDiv = document.getElementById('transcriptDisplay');
-    
     if (!transcriptDiv) {
         transcriptDiv = document.createElement('div');
         transcriptDiv.id = 'transcriptDisplay';
+        transcriptDiv.styles.overflow = "normal";
         const controlPanel = document.getElementById('controlPanel');
         controlPanel.appendChild(transcriptDiv);
     }
