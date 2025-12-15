@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document
         .getElementById("modeDropdown")
         .addEventListener("change", checkMode);
-
+    document
+        .getElementById("documentUpload")
+        .addEventListener("change", handleFileUpload);
 })
 
 let mediaRecorder;
@@ -220,4 +222,89 @@ function createTimer(parent) {
     buttonContainer.append(startBtn, resetBtn);
     container.append(display, selectorContainer, buttonContainer);
     parent.appendChild(container);
+}
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const controlPanel = document.getElementById("controlPanel");
+    
+    const existingDisplay = document.getElementById("fileDisplayContainer");
+    if (existingDisplay) {
+        existingDisplay.remove();
+    }
+
+    const fileDisplayContainer = document.createElement("div");
+    fileDisplayContainer.id = "fileDisplayContainer";
+
+    const header = document.createElement("div");
+    header.id = "fileDisplayHeader";
+
+    const fileName = document.createElement("span");
+    fileName.id = "fileName";
+    fileName.textContent = file.name;
+
+    const closeButton = document.createElement("button");
+    closeButton.id = "closeFileButton";
+    closeButton.textContent = "×";
+    closeButton.onclick = () => {
+        fileDisplayContainer.remove();
+        document.getElementById("documentUpload").value = "";
+    };
+
+    header.appendChild(fileName);
+    header.appendChild(closeButton);
+
+    const contentArea = document.createElement("div");
+    contentArea.id = "fileContentArea";
+
+    const fileType = file.type;
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+
+    if (fileType.startsWith('image/')) {
+        const img = document.createElement("img");
+        img.id = "uploadedImage";
+        img.src = URL.createObjectURL(file);
+        contentArea.appendChild(img);
+    } else if (fileType === 'application/pdf') {
+        const pdfEmbed = document.createElement("embed");
+        pdfEmbed.id = "uploadedPDF";
+        pdfEmbed.src = URL.createObjectURL(file);
+        pdfEmbed.type = "application/pdf";
+        contentArea.appendChild(pdfEmbed);
+    } else if (fileType === 'text/plain' || fileExtension === 'txt') {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const pre = document.createElement("pre");
+            pre.id = "uploadedText";
+            pre.textContent = e.target.result;
+            contentArea.appendChild(pre);
+        };
+        reader.readAsText(file);
+    } else if (fileExtension === 'docx' || fileExtension === 'doc') {
+        const message = document.createElement("div");
+        message.id = "docMessage";
+        message.innerHTML = `
+            <p>Document uploaded: <strong>${file.name}</strong></p>
+            <p>Word documents cannot be previewed in the browser.</p>
+            <p>File size: ${(file.size / 1024).toFixed(2)} KB</p>
+        `;
+        contentArea.appendChild(message);
+    } else {
+        const message = document.createElement("div");
+        message.id = "docMessage";
+        message.innerHTML = `
+            <p>File uploaded: <strong>${file.name}</strong></p>
+            <p>File type: ${fileType || 'Unknown'}</p>
+            <p>File size: ${(file.size / 1024).toFixed(2)} KB</p>
+        `;
+        contentArea.appendChild(message);
+    }
+
+    fileDisplayContainer.appendChild(header);
+    fileDisplayContainer.appendChild(contentArea);
+
+    const uploadButton = document.getElementById("uploadButton");
+    uploadButton.parentNode.insertBefore(fileDisplayContainer, uploadButton.nextSibling);
 }
