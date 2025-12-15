@@ -116,7 +116,8 @@ function updateTranscriptDisplay(finalText, interimText) {
     if (!transcriptDiv) {
         transcriptDiv = document.createElement('div');
         transcriptDiv.id = 'transcriptDisplay';
-        transcriptDiv.styles.overflow = "normal";
+        transcriptDiv.style.overflowX = "normal";
+        transcriptDiv.style.maxWidth = "100%";
         const controlPanel = document.getElementById('controlPanel');
         controlPanel.appendChild(transcriptDiv);
     }
